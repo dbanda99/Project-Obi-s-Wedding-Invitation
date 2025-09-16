@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wenfel &amp; Obi-wan – Wedding Invitation</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="David &amp; Fernanda – Invitación de Boda" />
+    <meta property="og:description"
+        content="Acompáñanos a celebrar nuestra unión el 31 de octubre de 2025. ¡RSVP y forma parte de nuestro día especial!" />
+    <meta property="og:image" content="data/Us-2.jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Favicon (reemplaza con tu icono real) -->
+    <link rel="icon" href="data/icon.ico" type="image/x-icon" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles-mobi.css" />
+</head>
+
+<body>
+    <!-- ======================
+       Navigation Bar
+       ====================== -->
+    <canvas id="leafCanvas"></canvas>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent position-absolute w-100" style="z-index: 1000;">
+        <div class="container">
+            <!-- Logo como imagen de Picsum -->
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="data/logo.png" alt="Logo" class="logo-img rounded-circle me-2" />
+                <span class="fw-bold nav-brand-text">Wenfel &amp; Obi-wan</span>
+            </a>
+            <!-- Toggler móvil -->
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list fs-2 text-white"></i>
+            </button>
+            <!-- Menú colapsado (sin fondo en desktop; fondo semitransparente solo en móvil) -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#our-story">Our Story</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#details">Details</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#registry">Registry</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link rsvp-btn" href="https://forms.gle/c3UhkNGA76vHD9XE9">RSVP</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ======================
+       Hero Section (Home)
+       ====================== -->
+    <header id="home"
+        class="hero-section d-flex flex-column justify-content-center align-items-center text-white text-center">
+        <!-- Fondo con imagen de Picsum -->
+        <div class="hero-bg"></div>
+        <div class="overlay"></div>
+
+        <div class="container position-relative">
+            <!-- Título Principal: “Fernanda & David” (tamaño aumentado) -->
+            <h1 class="hero-title">Wenfel &amp; Obi-wan</h1>
+
+            <!-- Cita en español -->
+            <div class="quote-container mt-3">
+                <p class="quote-text">
+                    “La medida del amor es amar sin medida.”
+                </p>
+                <p class="quote-author">— <em>San Agustín</em></p>
+            </div>
+
+            <!-- Fecha -->
+            <p class="hero-date mt-3">Octubre 31, 2025</p>
+
+            <!-- Countdown Timer -->
+            <div id="countdown" class="countdown d-flex justify-content-center align-items-center mt-4">
+                <div class="time-box mx-2 text-center">
+                    <span id="days" class="time-number">00</span><br />
+                    <small>Días</small>
+                </div>
+                <div class="time-box mx-2 text-center">
+                    <span id="hours" class="time-number">00</span><br />
+                    <small>Horas</small>
+                </div>
+                <div class="time-box mx-2 text-center">
+                    <span id="minutes" class="time-number">00</span><br />
+                    <small>Minutos</small>
+                </div>
+                <div class="time-box mx-2 text-center">
+                    <span id="seconds" class="time-number">00</span><br />
+                    <small>Segundos</small>
+                </div>
+            </div>
+
+            <!-- Music HUD (ligeramente reducido) -->
+            <div class="music-hud-wrapper mt-4">
+                <div class="music-hud music-hud-small d-flex">
+                    <!-- Izquierda: Carátula del álbum -->
+                    <div class="music-album-art p-2">
+                        <img src="data/star-wards.jpg" alt="Album Art" class="album-img" />
+                    </div>
+                    <!-- Derecha: Texto, barra de progreso y botón -->
+                    <div class="music-details flex-fill ps-3 pe-3">
+                        <div class="now-playing mb-1">Now Playing:</div>
+                        <div class="song-title mb-3">Across The Stars - Star Wars Piano Cover</div>
+
+                        <!-- Barra de Progreso -->
+                        <div class="progress-container mb-2">
+                            <div class="bar-bg">
+                                <div id="progressFill" class="bar-fill"></div>
+                                <div id="thumb" class="bar-thumb"></div>
+                            </div>
+                        </div>
+                        <!-- Etiquetas de Tiempo -->
+                        <div class="time-labels d-flex justify-content-between mb-3">
+                            <span id="currentTime">0:00</span>
+                            <span id="durationTime">4:28</span>
+                        </div>
+                        <!-- Botón Circular de Play/Pause -->
+                        <div class="d-flex justify-content-center">
+                            <button id="audioToggle" class="btn-play">
+                                <i id="audioIcon" class="bi bi-play-fill"></i>
+                            </button>
+                        </div>
+                        <!-- Audio oculto -->
+                        <audio id="weddingSong" src="data/Across_The_Stars.mp3"
+                            preload="metadata" autoplay loop></audio>
+                    </div>
+                </div>
+            </div>
+            <!-- /Music HUD -->
+        </div>
+    </header>
+
+    <!-- ======================
+       Our Story
+       ====================== -->
+    <section id="our-story" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-3">Our Story</h2>
+            <img src="data/Session-Fotos/08.jpeg" alt="Divider"
+                class="story-divider mx-auto d-block mb-4" />
+
+            <div class="mb-5">
+                <h3 class="story-subtitle">How we met:</h3>
+                <p>
+                    Una Promesa de Amor Eterno entre el Cielo, el Mar y Nosotros <img 
+                    src="data/Session-Fotos/11.jpeg" 
+                    alt="Divider"
+                    class="story-divider-2 d-block mb-4" 
+                    />
+                    <br>
+                    <br>
+                    Bajo la luz plateada de la luna, en una pequeña isla bañada por el mar, Fernanda y David hicieron
+                    una promesa. No era cualquier promesa, sino una que resistiría el paso del tiempo, las mareas
+                    cambiantes y los vientos de la vida.
+                    <br>
+                    <br>
+                    Desde el día en que se encontraron, supieron que estaban destinados a caminar juntos. Cada
+                    conversación fluía como las olas, sin pausas incómodas, sin silencios forzados. Y cuando el silencio
+                    llegaba, no era ausencia, sino compañía, un espacio seguro donde solo el latido de sus corazones
+                    hablaba.
+                    <br>
+                    <br>
+                    David, con su alma creativa, veía en Fernanda su mayor inspiración. Con cada trazo y cada melodía,
+                    plasmaba lo que sentía por ella. Fernanda, con su ternura y alegría, llenaba su vida de luz. Eran un
+                    equipo, dos mitades de un mismo sueño, creciendo juntos y aprendiendo el uno del otro.
+                    <br>
+                    <br>
+                    Cada foto en su álbum guardaba una historia:
+                    <br><br>📍 La primera cita en la plaza donde encontraron sus cerditos perfectos.
+                    <br>📍 La promesa silenciosa en el templo, donde sus corazones supieron que su amor era eterno.
+                    <br>📍 Aquel día en la isla, donde, con un poco de creatividad, David le pidió a Fernanda que fuera su
+                    amor para siempre al estilo de Jack y Sally.
+                    <br>📍 El primer mes juntos, cuando Fernanda conoció a la familia de David y, al segundo mes, él viajó a
+                    Reynosa para conocer a la de ella.
+                    <br>📍 Las visitas sorpresa, los pequeños detalles, las canciones inspiradas en su amor.
+                    <br>
+                    <br>
+                    Fernanda y David habían aprendido a ser apoyo mutuo, a sostenerse en los momentos difíciles, a
+                    compartir alegrías y superar pruebas. Sabían que su amor no sería fácil, pero también sabían que
+                    estaba construido sobre algo más grande que ellos mismos.
+                    <br>
+                    <br>
+                    Un día, cuando llegara el momento de su sellamiento, cuando finalmente pudieran decir que todo el
+                    esfuerzo valió la pena, gritarían al cielo y al mar con el alma llena de gozo:
+                    <br>
+                    <br>
+                    ”¡Valió la pena la espera y sí se pudo!”
+                    <br>
+                    <br>
+                    Porque lo que es verdadero y eterno siempre encuentra su camino, incluso entre el cielo, el mar y
+                    ellos dos
+                </p>
+            </div>
+            <div>
+                <h3 class="story-subtitle">The proposal:</h3>
+                <p>
+                    Después de cumplir un año de noviazgo con Fernanda, sentí que era momento de pedir ayuda al cielo…
+                    pero sin dudas existenciales: no pregunté “¿es ella la indicada?” (¡eso ya lo sabía!), sino “Señor,
+                    dame valor y sabiduría para este gran paso”. Con esa oración zanjada, me lancé a la búsqueda del
+                    anillo perfecto: recorrí joyerías, comparé quilates y hasta fingí interés en cadenas de oro para
+                    despistar a mi mejor amiga (confieso que me excedí con el presupuesto, pero todo sea por amor).
+                    <br>
+                    <br>
+                    La inspiración llegó gracias a mi viejo pasatiempo de magia: recordé los trucos de prestidigitación
+                    que hacía en reuniones familiares. Así que diseñé un número exclusivo para Fernanda. Conseguí una
+                    caja de cartón resistente y, apoyándome en mi destreza artística, dibujé un gran corazón en la tapa.
+                    Con unas tijeras creé el recorte exacto y forré el interior con papel fino de regalo, dejando el
+                    espacio justo para el anillo. Pegué la cajita del anillo con cinta, imaginando sus “sacudidas
+                    exploratorias”: ella tiene fama de menea-cajas, y no quería ningún spoiler antes de la gran
+                    revelación.
+                    <br>
+                    <br>
+                    Llegó la noche elegida: el 1 de marzo, alrededor de las nueve, nos reunimos con nuestras familias.
+                    Haciendo acopio de dramatismo, saqué la caja y anuncié: “Este cofre guarda todo mi amor y apoyo,
+                    pero para abrirlo debes encender la chispa… ¡la chispa de la magia!”. Le entregué un encendedor y la
+                    invité a quemar el contorno del corazón. Al ver las llamas danzantes, mi corazón latía a mil por
+                    hora: pensé que el anillo quedaría chamuscado, o peor, ¡que mi truco acabaría en incendio de tres
+                    alarmas!
+                    <br>
+                    <br>
+                    Cuando el fuego se avivó, actué con rapidez: metí la mano entre las brasas y, con un gesto al estilo
+                    Houdini, saqué la cajita del anillo sin un rasguño. Sentí los ojos de todos encima, y durante un
+                    instante creí que Fernanda me descubriría… pero mi maniobra fue tan veloz que nadie lo vio (ni
+                    siquiera ella supo cómo lo hice). Tras apagar con un suspiro la llama residual, me arrodillé ante
+                    ella.
+                    <br>
+
+                    Con voz temblorosa pero llena de ilusión, pronuncié la gran pregunta: “Fernanda, ¿aceptas ser mi
+                    eterna Sally, hoy y siempre?”. Hubo un silencio de película… hasta que una sonrisa iluminó su rostro
+                    y respondió con entusiasmo: “¡Sí, mil veces sí!”. En ese momento, comprendí que el mejor truco de
+                    magia no es esconder objetos, sino crear recuerdos que duren toda la vida.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================
+       Event Details
+       ====================== -->
+    <section id="details" class="bg-secondary-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Event Details:</h2>
+            <div class="row text-center">
+                <div class="col-md-6 mb-4">
+                    <div class="detail-card p-4 h-100">
+                        <div class="icon mb-2">
+                            <i class="bi bi-peace-fill fs-2 text-primary"></i>
+                        </div>
+                        <h3 class="detail-title">Ceremony</h3>
+                        <p class="fw-bold mb-1">Octubre 31, 2025 at 7:30 PM</p>
+                        <p class="mb-1">Por favor estar 30 minutos temprano.</p>
+                        <p class="mb-1">Salon Chapa 2</p>
+                        <p class="mb-3">5904 West Dr. Laredo, TX, 78041</p>
+                        <p class="mb-1"><strong>Codigo de Vestimenta:</strong></p>
+                        <p class="mb-3">Vestimenta Formal</p>
+                        <p class="mb-1"><strong>Colores:</strong></p>
+                        <img src="data/colores.png" alt="Color Palette" class="img-fluid mb-3" />
+                        <a href="https://maps.app.goo.gl/qxEtxCYxurrNtUFE9" target="_blank"
+                            class="btn btn-primary btn-sm"><i class="bi bi-geo-alt-fill me-1"></i>Dirección</a>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="detail-card p-4 h-100">
+                        <div class="icon mb-2">
+                            <i class="bi bi-music-note-beamed fs-2 text-primary"></i>
+                        </div>
+                        <h3 class="detail-title">Reception</h3>
+                        <p class="fw-bold mb-1">Octubre 31, 9:00 PM – Noviembre 1, 3:00 AM</p>
+                        <p class="mb-1">Por favor llegar a tiempo y respectar reglas del salon.
+                            <br>
+                            <strong>Nota:</strong> <br>No se permite bebida alcholicas dentro y fuera del salon. Habra seguridad policial a todo tiempo del evento.
+                        </p>
+                        <p class="mb-1">Salon Chapa 2</p>
+                        <p class="mb-3">5904 West Dr. Laredo, TX, 78041</p>
+                        <p class="mb-1"><strong>Actividades</strong></p>
+                        <p class="mb-3">
+                            Cena formal, baile, photobooth, y muchas sorpresas más.
+                        </p>
+                        <a href="https://maps.app.goo.gl/qxEtxCYxurrNtUFE9" target="_blank"
+                            class="btn btn-primary btn-sm"><i class="bi bi-geo-alt-fill me-1"></i>Dirección</a>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="detail-card p-4 h-100">
+                        <img src="data/sealing-icon.png" alt="Ceremony Icon" class="icon mb-2" width="50" height="50" />
+                        <h3 class="detail-title">Sealing</h3>
+                        <p class="fw-bold mb-1">Noviembre 1, 2:00 PM</p>
+                        <p class="mb-1">Por favor, lleguen a tiempo a la ceremonia y para aquellos que puedan asistir,
+                            ¡se lo agradeceremos!❤️</p>
+                        <br>
+                        <p class="mb-1">McAllen Texas Temple</p>
+                        <p class="mb-3">300 W Trenton Rd, McAllen, TX 78504</p>
+                        <a href="https://maps.app.goo.gl/UhBY6rceUVUfMHH96" target="_blank"
+                            class="btn btn-primary btn-sm"><i class="bi bi-geo-alt-fill me-1"></i>Dirección</a>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- ======================
+       RSVP Section
+       ====================== -->
+    <section id="rsvp" class="py-5">
+        <div class="container text-center">
+            <h2 class="section-title mb-3">Location Map</h2>
+            <iframe class="minimap" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3537.2012436647206!2d-99.48641812453796!3d27.556264176269455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x866120e180959141%3A0x91fa8bc2ee3e7702!2sSalon%20Chapa!5e0!3m2!1sen!2sus!4v1749489208309!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <p class="mb-4">
+                Tu presencia haría que nuestro día especial fuera perfecto. ¡Avísanos si puedes celebrar con nosotros!
+            </p>
+            <p class="mb-4"><em>Por favor responda antes del 1 de agosto de 2025</em></p>
+            <a href="https://forms.gle/c3UhkNGA76vHD9XE9" class="btn btn-primary btn-lg">
+                <i class="bi bi-envelope-fill me-1"></i>RSVP
+            </a>
+        </div>
+    </section>
+
+    <!-- ======================
+       Registry & Gift Codes
+       ====================== -->
+    <section id="registry" class="bg-secondary-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Wedding Gifts</h2>
+            <p class="text-center mb-5">
+                Escanea cualquiera de los códigos QR a continuación para enviar tu regalo directamente. ¡Muchas gracias
+                por tu apoyo!
+            </p>
+            <div class="row justify-content-center gy-4">
+                <div class="col-6 col-md-4 text-center">
+                    <h3 class="registry-title mb-3">
+                        <i class="bi bi-currency-dollar text-primary me-1"></i>CashApp
+                    </h3>
+                    <img src="data/CashApp-QR.png" alt="CashApp QR" class="img-fluid rounded-2 border" />
+                </div>
+                <div class="col-6 col-md-4 text-center">
+                    <h3 class="registry-title mb-3">
+                        <i class="bi bi-wallet-fill text-primary me-1"></i>Venmo
+                    </h3>
+                    <img src="data/Venmo-QR.jpeg" alt="Venmo QR" class="img-fluid rounded-2 border" />
+                </div>
+                <div class="col-6 col-md-4 text-center">
+                    <h3 class="registry-title mb-3">
+                        <i class="bi bi-paypal text-primary me-1"></i>PayPal
+                    </h3>
+                    <img src="data/Paypal-QR.jpeg" alt="PayPal QR" class="img-fluid rounded-2 border" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================
+       Photo Gallery (Our Journey)
+       ====================== -->
+    <section id="gallery" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Our Journey</h2>
+            <p class="text-center mb-5">Un pedacito de nuestra vida para ustedes. Disfruten cada foto igual como
+                nosotros lo hemos hecho.</p>
+            <div class="row g-3">
+                <!-- Ocho imágenes de muestra con Picsum -->
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/01.jpeg" alt="Gallery 1"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/02.jpeg" alt="Gallery 2"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/03.jpeg" alt="Gallery 3"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/04.jpeg" alt="Gallery 4"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/05.jpeg" alt="Gallery 5"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/06.jpeg" alt="Gallery 6"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/07.jpeg" alt="Gallery 7"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/08.jpeg" alt="Gallery 8"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/09.jpeg" alt="Gallery 9"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/10.jpeg" alt="Gallery 10"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/11.jpeg" alt="Gallery 11"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/12.jpeg" alt="Gallery 12"
+                            class="img-fluid album-img" data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Modal para imágenes a pantalla completa -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center align-items-center">
+                    <img src="" alt="Foto ampliada" id="modalImage" class="img-fluid"
+                        style="max-width: 90vw; max-height: 90vh; object-fit: contain;" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Optional: Hidden RSVP Form Anchor -->
+    <section id="contact-form" class="py-5">
+        <div class="container">
+            <!-- Aquí podría ir tu formulario real de RSVP -->
+        </div>
+    </section>
+
+    <!-- ======================
+       Footer
+       ====================== -->
+    <footer class="text-center text-white py-4 bg-dark">
+        <div class="container">
+            <p class="mb-1">
+                Hashtag:
+                <span class="fw-semibold text-warning">#Obi-Wen</span>
+            </p>
+            <p>Made with <i class="bi bi-heart-fill text-danger"></i> for our special day.</p>
+            <p id="footer" class="mb-1">&copy; 2025 Wenfel &amp; Obi-wan Wedding</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS + Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>
